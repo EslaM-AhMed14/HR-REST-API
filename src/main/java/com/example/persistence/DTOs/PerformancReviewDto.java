@@ -12,6 +12,7 @@ public class PerformancReviewDto  implements Serializable {
 
     private Integer reviewId;
     private String employeeName;
+    private Integer employeeId;
     private Date reviewDate;
     private PerformanceReating performanceRating;
 }

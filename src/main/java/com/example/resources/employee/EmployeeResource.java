@@ -102,11 +102,9 @@ public class EmployeeResource {
     public Response updateEmployee(EmployeeDto employeeDto) {
         try{
         boolean updatedEmployee = EmployeeService.updateEmployee(employeeDto);
-            System.out.println("Employee bool" + updatedEmployee);
         if (!updatedEmployee)
             throw new ResourceNotFound("Employee not updated");
 
-            System.out.println("Employee Updated reso" + updatedEmployee);
         return Response.status(Response.Status.OK)
                 .entity(updatedEmployee)
                 .build();

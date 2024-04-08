@@ -14,4 +14,6 @@ public class SalaryDto implements Serializable {
     private BigDecimal basicSalary;
     private BigDecimal bonus;
     private BigDecimal deductions;
+
+    private BigDecimal netSalary;
 }

@@ -11,6 +11,7 @@ import java.sql.Date;
 @Value
 public class LeaveManagementDto implements Serializable {
     private Integer leaveId;
+    private  Integer employeeId;
     private String employeeName;
     private LeaveType leaveType;
     private Date startDate;

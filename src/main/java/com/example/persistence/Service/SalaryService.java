@@ -5,8 +5,6 @@ import com.example.persistence.DTOs.SalaryDto;
 import com.example.persistence.connect.Database;
 import com.example.persistence.entities.Salary;
 import com.example.persistence.mappers.SalaryMapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ap.internal.model.Mapper;
 
 import java.util.List;
 
@@ -37,4 +35,43 @@ public class SalaryService {
             return SalaryMapper.INSTANCE.toSalaryDtoList(salaries);
         });
     }
+
+
+    public static boolean updateSalary(SalaryDto salaryDto) {
+        return Database.doInTransaction(em -> {
+            SalaryDAO salaryDAO = new SalaryDAO();
+            Salary salary = SalaryMapper.INSTANCE.salaryDtoToSalary(salaryDto);
+            return salaryDAO.update(salary, em);
+        });
+    }
+
+    public static void applayBonusForAllEmployees(double percentage) {
+        Database.doInTransactionWithoutResult(em -> {
+            SalaryDAO salaryDAO = new SalaryDAO();
+            salaryDAO.applayBonusForAllEmployees(percentage, em);
+        });
+    }
+
+    public static void applayDeductionsForAllEmployees(double percentage) {
+        Database.doInTransactionWithoutResult(em -> {
+            SalaryDAO salaryDAO = new SalaryDAO();
+            salaryDAO.applayDeductionsForAllEmployees(percentage, em);
+        });
+    }
+
+    public static void applayBonusForEmployee(int employeeId, double percentage) {
+        Database.doInTransactionWithoutResult(em -> {
+            SalaryDAO salaryDAO = new SalaryDAO();
+            salaryDAO.applayBonusForEmployee(employeeId, percentage, em);
+        });
+    }
+
+    public static void applayDeductionsForEmployee(int employeeId, double percentage) {
+        Database.doInTransactionWithoutResult(em -> {
+            SalaryDAO salaryDAO = new SalaryDAO();
+            salaryDAO.applayDeductionsForEmployee(employeeId, percentage, em);
+        });
+    }
+
+
 }

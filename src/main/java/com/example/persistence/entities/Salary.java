@@ -23,6 +23,7 @@ public class Salary  implements java.io.Serializable {
      private BigDecimal basicSalary;
      private BigDecimal bonus;
      private BigDecimal deductions;
+    private BigDecimal netSalary;
 
     public Salary() {
     }
@@ -87,6 +88,14 @@ public class Salary  implements java.io.Serializable {
         this.deductions = deductions;
     }
 
+    @Transient
+    public BigDecimal getNetSalary() {
+        BigDecimal basic = (this.basicSalary != null) ? this.basicSalary : BigDecimal.ZERO;
+        BigDecimal bon = (this.bonus != null) ? this.bonus : BigDecimal.ZERO;
+        BigDecimal ded = (this.deductions != null) ? this.deductions : BigDecimal.ZERO;
+
+        return basic.add(bon).subtract(ded);
+    }
 
     @Override
     public String toString() {

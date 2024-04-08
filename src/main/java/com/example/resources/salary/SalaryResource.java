@@ -54,6 +54,7 @@ public class SalaryResource {
     }
 
 
+
     @GET
     @Produces("application/json")
     @Path("/getBasicSalaryRange")
@@ -73,7 +74,69 @@ public class SalaryResource {
     }
 
 
+    @PUT
+    @Path("/applayBonu")
+    public Response BonusForAllEmployees(@QueryParam("percentage") double percentage) {
+        try {
+            SalaryService.applayBonusForAllEmployees(percentage);
+            return Response.status(Response.Status.OK)
+                    .entity("Bonus for all employees increased by " + percentage + "%")
+                    .build();
+        } catch (Exception e) {
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorMessage)
+                    .build();
+        }
+    }
 
+    @PUT
+    @Path("/applayDeduction")
+    public Response DeductionsForAllEmployees(@QueryParam("percentage") double percentage) {
+        try {
+            SalaryService.applayDeductionsForAllEmployees(percentage);
+            return Response.status(Response.Status.OK)
+                    .entity("Deduction for all employees increased by " + percentage + "%")
+                    .build();
+        } catch (Exception e) {
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorMessage)
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("/applayBounForEmployee")
+    public Response BonusForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
+        try {
+            SalaryService.applayBonusForEmployee(employeeId, percentage);
+            return Response.status(Response.Status.OK)
+                    .entity("Bonus for employee with id: " + employeeId + " increased by " + percentage + "%")
+                    .build();
+        } catch (Exception e) {
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorMessage)
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("/applayDeductionForEmployee")
+    public Response DeductionForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
+        try {
+            SalaryService.applayDeductionsForEmployee(employeeId, percentage);
+            return Response.status(Response.Status.OK)
+                    .entity("Deduction for employee with id: " + employeeId + " increased by " + percentage + "%")
+                    .build();
+        } catch (Exception e) {
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(errorMessage)
+                    .build();
+        }
+    }
 
 
 

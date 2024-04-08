@@ -13,9 +13,11 @@ public interface LeaveManagementMapper {
     LeaveManagementMapper INSTANCE = Mappers.getMapper(LeaveManagementMapper.class);
 
     @Mapping(source = "employee.firstName", target = "employeeName")
+    @Mapping(source = "employee.employeeId", target = "employeeId")
     LeaveManagementDto leaveManagementToLeaveManagementDto(LeaveManagement leaveManagement);
 
     @Mapping(source = "employeeName", target = "employee.firstName")
+    @Mapping(source = "employeeId", target = "employee.employeeId")
     LeaveManagement leaveManagementDtoToLeaveManagement(LeaveManagementDto leaveManagementDto);
 
     List<LeaveManagement> toLeaveManagementList(List<LeaveManagementDto> leaveManagementDtos);

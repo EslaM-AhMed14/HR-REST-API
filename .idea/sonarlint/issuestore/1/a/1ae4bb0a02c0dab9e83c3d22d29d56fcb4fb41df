@@ -1,0 +1,17 @@
+
+`
+java:S2095"KUse try-with-resources or close this "EntityManager" in a "finally" clause.(ÇÌØ
+m
+java:S2095"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(õ•º¡ûÿÿÿÿ
+X	java:S125"<This block of commented-out lines of code should be removed.(Åìî¬8´Ìîë1
+b
+java:S1128"GRemove this unused import 'com.example.persistence.DTOs.DepartmentDto'.(£Ýúþÿÿÿÿ
+c
+java:S1128"NRemove this unused import 'com.example.persistence.Service.DepartmentService'.(Èéê'
+N
+java:S1128
+"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8’´Ìîë1
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ

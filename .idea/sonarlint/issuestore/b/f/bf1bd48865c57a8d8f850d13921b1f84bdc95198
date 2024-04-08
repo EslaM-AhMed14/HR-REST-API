@@ -1,0 +1,8 @@
+
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(éŒÏÇşÿÿÿÿ8Ä‰ğ×ë1J$57881cb8-7a36-4205-a4e4-aad423730053
+¥
+java:S1488P"bImmediately return this expression instead of assigning it to the temporary variable "department".(ï¬Â™8È‰ğ×ë1J$5d65167d-067e-440b-b382-38d900553fed
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(§ë¢Å8Î‰ğ×ë1J$3e8eb53d-e52b-4d23-a278-d128abca03f7
+‰
+java:S1126"AReplace this if-then-else statement by a single return statement.(Ù‚Ñıÿÿÿÿ8ƒŠğ×ë1J$f109994e-179d-46f5-9b29-1e7e1a31f9c6
+m	java:S106j"+Replace this use of System.out by a logger.(ÿÅ“8œŠğ×ë1J$c90e88d6-4b95-4692-826b-333efea472d7

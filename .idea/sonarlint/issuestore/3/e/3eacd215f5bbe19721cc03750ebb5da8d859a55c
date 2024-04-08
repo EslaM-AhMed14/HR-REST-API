@@ -1,0 +1,25 @@
+
+ˆ	java:S112\"FDefine and throw a dedicated exception instead of using a generic one.(™Ï§ç8‡÷´Úë1J$031cc2ff-be9a-44c0-94bf-eb77f4e777c2
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(øÛ•Ëşÿÿÿÿ8‹÷´Úë1J$d5806a7f-dd5a-4a5c-98ab-57f630a48ef9
+Œ
+java:S2259"HA "NullPointerException" could be thrown; "department" is nullable here.(ò¿¾­8°ïìë1J$2cbbb0da-338d-4f38-bfc4-c764dfc15cc4
+”
+java:S2095-"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(¨Ù±|8³ïìë1J$b6225b67-338c-4647-aea2-de78847e0985
+”
+java:S20958"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(¨Ù±|8²ïìë1J$6d4a968b-221b-456d-833f-bf1db4ad34b0
+•
+java:S2095‡"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(¨Ù±|8´ïìë1J$51f918ca-d95b-4455-b0e9-e208bb33386f
+n
+java:S2095Q"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(¨Ù±|8Ô³Ìîë1
+
+java:S2589"8Remove this expression which always evaluates to "false"(œİÊÅùÿÿÿÿ8µïìë1J$e310ab02-e4af-48ec-92f8-5429cc1e8d40
+‚
+java:S1118":Add a private constructor to hide the implicit public one.(§†ù÷ÿÿÿÿÿ8°ø´Úë1J$3d283579-a803-4056-916e-59627629b142
+~	java:S125E"<This block of commented-out lines of code should be removed.(¯¹Îõ8³ø´Úë1J$c76f0541-ed50-4097-a02c-f35ca92bd98b
+m	java:S106W"+Replace this use of System.out by a logger.(³Ô8´ø´Úë1J$8d6fc377-5580-4229-98ed-359e5de08457
+m	java:S106Z"+Replace this use of System.out by a logger.(Ââ´½8µø´Úë1J$77c6d70c-6e46-4386-816e-42a9f5ba2401
+m	java:S106_"+Replace this use of System.out by a logger.(ÊÓç§8¶ø´Úë1J$c4d44e8d-de3e-4978-90a4-657fed99d5a7
+š
+java:S3776d"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(–¦›äüÿÿÿÿ8¶ø´Úë1J$0575f275-c124-44d2-8cbd-d5a556da8270
+r	java:S106z"+Replace this use of System.out by a logger.(İˆà€úÿÿÿÿ8ºø´Úë1J$2863617c-13b8-4593-ae0b-d04f5abd8e3c
+n	java:S106"+Replace this use of System.out by a logger.(ò¿¾­8¼ø´Úë1J$08e7fd0c-74e5-4ae3-98e0-c02c3d626308

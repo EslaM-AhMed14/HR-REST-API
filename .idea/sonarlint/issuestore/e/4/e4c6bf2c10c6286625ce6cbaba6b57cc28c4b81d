@@ -1,0 +1,15 @@
+
+Å
+java:S1192"Define a constant instead of duplicating this literal "----------------------------------------------------------------" 3 times.(Á”¦ô8™Ôë1J$e686276d-32c2-4b23-a6ea-08bfd1c54ecb
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(§ë¢Å8–™Ôë1J$aa47cc22-378e-43c8-a754-4bfb05468935
+m	java:S106"+Replace this use of System.out by a logger.(Á”¦ô8Ñ™Ôë1J$f734dc3a-af0f-4d91-8d81-800d862d699a
+r	java:S106"+Replace this use of System.out by a logger.(·¯¤àúÿÿÿÿ8Ò™Ôë1J$1bcb1e94-26ce-41f8-8c51-8f967075fa70
+m	java:S106"+Replace this use of System.out by a logger.(Á”¦ô8Ó™Ôë1J$01b5d266-0ac4-4587-b717-33b771c83e55
+r	java:S106"+Replace this use of System.out by a logger.(‘ñÙùıÿÿÿÿ8Ô™Ôë1J$16548eda-9830-4034-915c-eb9a460d2cc9
+m	java:S106"+Replace this use of System.out by a logger.(Á”¦ô8Õ™Ôë1J$c1ee8991-bd3f-4281-99e1-d818e38e5606
+†
+java:S1854A"CRemove this useless assignment to local variable "updatedEmployee".(Óˆ•™8à™Ôë1J$f8c7bf80-cdf2-4239-b30b-8c26d72c2f68
+~	java:S125;"<This block of commented-out lines of code should be removed.(¯ØÉ¤8ŒîÕë1J$71f5bec5-ac8c-4797-887b-9df7b31230d4
+w
+java:S1481A"4Remove this unused "updatedEmployee" local variable.(Óˆ•™8è™Ôë1J$f4225fae-4718-4566-9425-d5437856b46a
+m	java:S106E"+Replace this use of System.out by a logger.(’ŒÉ‚8é™Ôë1J$61c43096-c102-40bc-9efa-56377928e7fc

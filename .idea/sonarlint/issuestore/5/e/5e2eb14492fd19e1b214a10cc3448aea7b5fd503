@@ -1,0 +1,9 @@
+
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(øÛ•Ëþÿÿÿÿ8ê›êçë1J$b60ef59d-28a9-4b8a-945b-60af933dbc21
+”
+java:S20959"RUse try-with-resources or close this "EntityManagerFactory" in a "finally" clause.(¨Ù±|8–œêçë1J$a3ee064c-db9e-4776-879e-10b288b4ebf2
+‚
+java:S1118":Add a private constructor to hide the implicit public one.(®Ž„æþÿÿÿÿ8šœêçë1J$87eeae5b-20f3-4425-ac81-5b1c3c2f8704
+r	java:S106Q"+Replace this use of System.out by a logger.(žàŠþøÿÿÿÿ8¦œêçë1J$bc9b56f0-1270-41a8-a695-9db46714aadf
+t
+java:S1128"1Remove this unused import 'org.mapstruct.Mapper'.(¤ãËÔ8¯œêçë1J$5de5f1f4-330e-4110-a564-759b1b1df9f5

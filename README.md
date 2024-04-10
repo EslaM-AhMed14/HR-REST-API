@@ -31,14 +31,3 @@ To get started with the HR Management System REST API, follow these steps:
 ## API Documentation
 
 Detailed documentation for the API endpoints can be found [here](https://documenter.getpostman.com/view/33815865/2sA3BgBvx9).
-
-## Contributing
-
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
-
-- Fork the repository.
-- Create a new branch (`git checkout -b feature/your-feature`).
-- Make your changes.
-- Commit your changes (`git commit -am 'Add some feature'`).
-- Push to the branch (`git push origin feature/your-feature`).
-- Create a new Pull Request.

@@ -1,3 +1,4 @@
+
 # HR Management System REST API
 
 Welcome to the HR Management System REST API repository! This repository contains the source code and documentation for the REST API that facilitates managing various aspects of human resources including employees, job openings, leave management, salary, departments, and performance reviews.
@@ -13,20 +14,26 @@ Welcome to the HR Management System REST API repository! This repository contain
 
 ## Technologies Used
 
-- **Programming Language**: [Specify language(s) used, e.g., Python, JavaScript]
-- **Web Framework**: [Specify framework(s) used, e.g., Flask, Express]
-- **Database**: [Specify database used, e.g., PostgreSQL, MongoDB]
-- **Authentication**: [Specify authentication method used, e.g., JWT, OAuth]
+- **Programming Language**: Java
+- **REST Framework**: Jersey
+- **Database**: MySQL
+- **ORM (Object-Relational Mapping)**: Hibernate Core
+- **Connection Pooling**: HikariCP
+- **Validation**: Hibernate Validator
+- **Dependency Management**: Maven
+- **JSON Handling**: Jackson Databind, Jackson Datatype JSR310 (for date format)
+- **Testing**: JUnit, Mockito
 
 ## Getting Started
 
 To get started with the HR Management System REST API, follow these steps:
 
 1. **Clone the Repository**: `git clone <repository-url>`
-2. **Install Dependencies**: `cd <repository-directory>` then `npm install` or `pip install -r requirements.txt`
-3. **Set Environment Variables**: Set up environment variables required for configuration (e.g., database connection, API keys).
-4. **Run the Application**: Start the application using `npm start` or `python app.py`.
+2. **Set Up Database**: Configure the database schema and connection properties. 
+3. **Build the Project**: Compile the Java source files into bytecode using Maven.
+4. **Run the Application**: Deploy the REST service on a web server or application server (e.g., Apache Tomcat, Jetty).
 5. **Explore API Documentation**: Browse the provided API documentation to understand available endpoints and how to interact with them.
+
 
 ## API Documentation
 

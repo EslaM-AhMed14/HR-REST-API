@@ -4,6 +4,7 @@ package com.example.persistence.dao.impl;
 import com.example.exception.ResourceNotFound;
 import com.example.persistence.dao.interfaces.PerformanceReviewDAOInt;
 import com.example.persistence.entity.PerformanceReview;
+import jakarta.json.bind.JsonbException;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -16,7 +17,13 @@ public class PerformanceReviewDAO  implements PerformanceReviewDAOInt {
 
     @Override
     public boolean save(PerformanceReview performanceReview, EntityManager em) {
-        return false;
+        try {
+            em.persist(performanceReview);
+            return true;
+        }catch (Exception e) {
+           return false;
+        }
+
     }
 
     @Override
@@ -26,12 +33,17 @@ public class PerformanceReviewDAO  implements PerformanceReviewDAOInt {
 
     @Override
     public boolean update(PerformanceReview performanceReview, EntityManager em) {
-        return false;
+        try {
+            em.merge(performanceReview);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public void delete(PerformanceReview performanceReview, EntityManager em) {
-
+        em.remove(performanceReview);
     }
 
 
@@ -49,15 +61,13 @@ public class PerformanceReviewDAO  implements PerformanceReviewDAOInt {
     public void addPerformanceReview(PerformanceReview performanceReview, EntityManager em) {
         try {
             performanceReview.setReviewDate(new java.sql.Date(new java.util.Date().getTime()));
-            em.persist(performanceReview);
+            save(performanceReview, em);
 
-        }catch (Exception e) {
-            if (e instanceof jakarta.json.bind.JsonbException) {
-                throw new RuntimeException("Invalid Performance Rating value. Allowed values are: Excellent, Very_good, Good, Fair, Poor");
-            }  else {
-                e.getMessage();
-                throw new ResourceNotFound("Performance Review not added");
-            }
+        }catch (JsonbException e){
+            throw new RuntimeException("Invalid Performance Rating value. Allowed values are: Excellent, Very_good, Good, Fair, Poor");
+        }
+        catch (Exception e) {
+            throw new ResourceNotFound("Performance Review not added");
         }
     }
 

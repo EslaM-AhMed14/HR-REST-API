@@ -1,13 +1,15 @@
 package com.example.resources.salary;
 
 
-import com.example.exception.ErrorMessage;
 import com.example.persistence.dto.SalaryDto;
 import com.example.persistence.service.SalaryService;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Path("/salary")
 public class SalaryResource {
@@ -19,6 +21,7 @@ public class SalaryResource {
 
     @GET
     @Path("/getBasicSalary")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getBasicSalary(@QueryParam("employeeId")  int id) {
         try {
             SalaryDto salaryDto =SalaryService.getBasicSalary(id);
@@ -26,9 +29,8 @@ public class SalaryResource {
                     .entity(salaryDto)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage() ,404);
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(errorMessage)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
 
         }
@@ -36,7 +38,7 @@ public class SalaryResource {
 
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/getBasicSalaries")
     public Response getBasicSalaries() {
         try {
@@ -45,9 +47,8 @@ public class SalaryResource {
                     .entity(salaryDtos)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage() ,404);
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(errorMessage)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
 
         }
@@ -56,7 +57,7 @@ public class SalaryResource {
 
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/getBasicSalaryRange")
     public Response getBasicSalaryRange(@QueryParam("min") int min, @QueryParam("max") int max) {
         try {
@@ -65,9 +66,8 @@ public class SalaryResource {
                     .entity(salaryDtos)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage() ,404);
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(errorMessage)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
 
         }
@@ -75,65 +75,73 @@ public class SalaryResource {
 
 
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/applayBonu")
-    public Response BonusForAllEmployees(@QueryParam("percentage") double percentage) {
+    public Response bonusForAllEmployees(@QueryParam("percentage") double percentage) {
         try {
             SalaryService.applayBonusForAllEmployees(percentage);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Bonus for all employees increased by "+percentage+"%");
             return Response.status(Response.Status.OK)
-                    .entity("Bonus for all employees increased by " + percentage + "%")
+                    .entity(response)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(errorMessage)
+                    .entity(e.getMessage())
                     .build();
         }
     }
 
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/applayDeduction")
-    public Response DeductionsForAllEmployees(@QueryParam("percentage") double percentage) {
+    public Response deductionsForAllEmployees(@QueryParam("percentage") double percentage) {
         try {
             SalaryService.applayDeductionsForAllEmployees(percentage);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Deduction for all employees increased by "+percentage+"%");
             return Response.status(Response.Status.OK)
-                    .entity("Deduction for all employees increased by " + percentage + "%")
+                    .entity(response)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(errorMessage)
+                    .entity(e.getMessage())
                     .build();
         }
     }
 
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/applayBounForEmployee")
-    public Response BonusForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
+    public Response bonusForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
         try {
             SalaryService.applayBonusForEmployee(employeeId, percentage);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Bonus for employee with id: "+employeeId+" increased by "+percentage+"%");
             return Response.status(Response.Status.OK)
-                    .entity("Bonus for employee with id: " + employeeId + " increased by " + percentage + "%")
+                    .entity(response)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(errorMessage)
+                    .entity(e.getMessage())
                     .build();
         }
     }
 
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/applayDeductionForEmployee")
-    public Response DeductionForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
+    public Response deductionForEmployee(@QueryParam("employeeId") int employeeId, @QueryParam("percentage") double percentage) {
         try {
             SalaryService.applayDeductionsForEmployee(employeeId, percentage);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Deduction for employee with id: "+employeeId+" increased by "+percentage+"%");
             return Response.status(Response.Status.OK)
-                    .entity("Deduction for employee with id: " + employeeId + " increased by " + percentage + "%")
+                    .entity(response)
                     .build();
         } catch (Exception e) {
-            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 500);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(errorMessage)
+                    .entity(e.getMessage())
                     .build();
         }
     }

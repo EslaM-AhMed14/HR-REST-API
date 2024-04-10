@@ -25,14 +25,9 @@ public class EmployeeDAO implements EmployeeDAOInt {
             Department department = departmentDAO.getDepartmentByName(employee.getDepartment().getDepartmentName(), em);
 
             if(department == null){
-                throw new NoResultException("Department not found");
+                throw new ResourceNotFound("Department not found");
             }
 
-            System.out.println("Department "+ employee.getDepartment().getDepartmentName());
-            System.out.println("phone"+ employee.getPhoneNumber());
-            System.out.println("emsil"+employee.getEmail());
-
-            System.out.println("Department found");
             em.getTransaction().begin();
             employee.setDepartment(department);
             Salary salary = new Salary();
@@ -46,13 +41,12 @@ public class EmployeeDAO implements EmployeeDAOInt {
             em.getTransaction().begin();
             Employee employee1 = em.find(Employee.class, employee.getEmployeeId());
             em.getTransaction().commit();
-            System.out.println("end");
+
 
             return !Objects.isNull(employee1);
         }catch (NoResultException e) {
             throw new ResourceNotFound("Failed to add employee: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResourceNotFound("the email or phoneNumber is already in use");
         }
 
@@ -72,8 +66,8 @@ public class EmployeeDAO implements EmployeeDAOInt {
             em.flush();
             em.getTransaction().commit();
             em.close();
-                System.out.println("Employee Updated");
-                return true;
+
+            return true;
         }catch (Exception e) {
             e.printStackTrace();
             throw new NoResultException("Cant Update");

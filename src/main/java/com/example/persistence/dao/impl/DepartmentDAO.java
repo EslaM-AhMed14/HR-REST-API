@@ -1,6 +1,7 @@
 package com.example.persistence.dao.impl;
 
 
+import com.example.exception.ResourceNotFound;
 import com.example.persistence.dao.interfaces.DepartmentDAOInt;
 import com.example.persistence.entity.Department;
 import com.example.persistence.entity.Employee;
@@ -16,12 +17,12 @@ public class DepartmentDAO implements DepartmentDAOInt {
     public boolean save(Department department, EntityManager em)  throws RuntimeException{
         Department department1 = getDepartmentByName(department.getDepartmentName(), em);
         if (department1 != null) {
-            throw new RuntimeException("Department already exists");
+            throw new ResourceNotFound("Department already exists");
         }
         em.persist(department);
         Department department2 = em.find(Department.class, department.getDepartmentId());
         if (department2 == null) {
-            return false;
+            throw new ResourceNotFound("Department not saved");
         }
         return true;
     }
@@ -56,9 +57,12 @@ public class DepartmentDAO implements DepartmentDAOInt {
     }
 
     @Override
-    public boolean DeleteDepartmentById(Integer id, EntityManager em) {
+    public boolean deleteDepartmentById(Integer id, EntityManager em) {
         try {
             Department department = em.find(Department.class, id);
+            if (department == null) {
+                throw new ResourceNotFound("Department not found");
+            }
             Set<Employee> employees = department.getEmployees();
             em.remove(department);
             employees.forEach(employee -> {
@@ -76,11 +80,10 @@ public class DepartmentDAO implements DepartmentDAOInt {
     @Override
     public  Department getDepartmentByName(String name, EntityManager em) {
         try {
-            Department department = em.createQuery("SELECT d FROM Department d WHERE LOWER( d.departmentName) = LOWER(:name)", Department.class)
+            return  em.createQuery("SELECT d FROM Department d WHERE LOWER( d.departmentName) = LOWER(:name)", Department.class)
                     .setParameter("name", name)
                     .getSingleResult();
 
-            return department;
         }catch (Exception e){
             return null;
         }
@@ -99,19 +102,14 @@ public class DepartmentDAO implements DepartmentDAOInt {
     public Set<Employee> getAllEmployeesByDepartment(int id, EntityManager em) {
         Department department = em.find(Department.class, id);
 
-        Set<Employee> employees =  department.getEmployees();
-        int i =0 ;
-        for (Employee employee : employees) {
-            System.out.println( "**+"+ i++ +" -"+employee.getFirstName());
-        }
-        return employees;
+        return   department.getEmployees();
     }
 
    public List<Employee> getAllManager(EntityManager em) {
        try {
            return em.createQuery("SELECT e FROM Employee e WHERE e.employeeId = e.department.employee.employeeId", Employee.class).getResultList();
        } catch (Exception e) {
-           throw new RuntimeException("No Manager Found");
+           throw new ResourceNotFound("No Manager Found");
        }
    }
 

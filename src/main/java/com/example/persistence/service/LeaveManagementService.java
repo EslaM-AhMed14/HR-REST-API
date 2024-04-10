@@ -19,6 +19,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class LeaveManagementService {
+
+    private LeaveManagementService() {
+    }
     public static List<LeaveManagementDto> getAllLeaves() {
         return Database.doInTransaction(em->{
             LeaveManagementDAO leaveDAO = new LeaveManagementDAO();
@@ -30,7 +33,6 @@ public class LeaveManagementService {
 
     public static void createLeave(LeaveManagementDto performanceReviewDto) {
         Database.doInTransactionWithoutResult(em -> {
-            System.out.println("service Leave");
             EntityManagerFactory emf =
                     Persistence.createEntityManagerFactory("DB");
             EntityManager em1 = emf.createEntityManager();
@@ -39,17 +41,14 @@ public class LeaveManagementService {
             if (employee == null) {
                 throw new RuntimeException("Employee not found");
             }
-            System.out.println("Employee found");
             em1.close();
             LeaveManagementDAO leaveDAO = new LeaveManagementDAO();
             LeaveManagement leave = LeaveManagementMapper.INSTANCE.leaveManagementDtoToLeaveManagement(performanceReviewDto);
             leave.setEmployee(employee);
 
             leave.setStatus(LeaveStatus.Pending);
-            System.out.println("Leave set to pending");
 
             leaveDAO.save(leave, em);
-            System.out.println("Leave created");
         });
     }
 

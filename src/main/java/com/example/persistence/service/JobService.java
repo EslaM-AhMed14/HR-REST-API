@@ -11,6 +11,9 @@ import com.example.persistence.mapper.JobMapper;
 import java.util.List;
 
 public class JobService {
+
+    private JobService() {
+    }
     public static List<JobDto> getAllJobOpenings() {
         return Database.doInTransaction(em -> {
             JobDAO jobDAO = new JobDAO();
@@ -43,7 +46,6 @@ public class JobService {
             }
             job.setJobName(jobDto.getJobName());
             job.setRequirements(jobDto.getRequirements());
-            System.out.println("****>"+jobDto.getRequirements() );
             DepartmentDAO departmentDAO = new DepartmentDAO();
             Department department = departmentDAO.get(jobDto.getDepartmentProviderId(), em).orElse(null);
             if (department == null) {

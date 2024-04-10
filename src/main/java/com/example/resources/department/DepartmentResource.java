@@ -9,7 +9,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Path("/department")
@@ -68,21 +70,23 @@ public class DepartmentResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/addDepartment")
     public Response addDepartment(DepartmentDto departmentDto) {
-       try {
-           boolean addedDepartment = DepartmentService.addDepartment(departmentDto);
-           if (!addedDepartment)
-               throw new ResourceNotFound("Department not added");
+        try {
+            boolean addedDepartment = DepartmentService.addDepartment(departmentDto);
+            if (!addedDepartment)
+                throw new ResourceNotFound("Department not added");
 
-           return Response.status(Response.Status.CREATED)
-                   .entity("Department added")
-                   .build();
-       }catch (Exception e){
-           ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
-           Response response = Response.status(Response.Status.NOT_FOUND)
-                   .entity(errorMessage)
-                   .build();
-           throw new WebApplicationException(response);
-       }
+            Map<String,String > response = new HashMap<>();
+            response.put("message", "Department added successfully");
+            return Response.status(Response.Status.CREATED)
+                    .entity(response)
+                    .build();
+        }catch (Exception e){
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
+            Response response = Response.status(Response.Status.NOT_FOUND)
+                    .entity(errorMessage)
+                    .build();
+            throw new WebApplicationException(response);
+        }
     }
 
     @PUT
@@ -95,8 +99,10 @@ public class DepartmentResource {
             if (!updatedDepartment)
                 throw new ResourceNotFound("Department not updated");
 
+            Map<String,String > response = new HashMap<>();
+            response.put("message", "Department updated successfully");
             return Response.status(Response.Status.OK)
-                    .entity("Department updated")
+                    .entity(response)
                     .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
@@ -116,9 +122,9 @@ public class DepartmentResource {
             if (employeeDtos.isEmpty())
                 throw new ResourceNotFound("No Employees found");
 
-                return Response.status(Response.Status.OK)
-                        .entity(employeeDtos)
-                        .build();
+            return Response.status(Response.Status.OK)
+                    .entity(employeeDtos)
+                    .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
             Response response = Response.status(Response.Status.NOT_FOUND)
@@ -133,9 +139,11 @@ public class DepartmentResource {
     @Path("/deleteDepartment/{id}")
     public Response deleteDepartment(@PathParam("id") int id) {
         try {
-           boolean done  = DepartmentService.deleteDepartment(id);
+            DepartmentService.deleteDepartment(id);
+            Map<String,String > response = new HashMap<>();
+            response.put("message", "Department deleted successfully");
             return Response.status(Response.Status.OK)
-                    .entity("Department deleted")
+                    .entity(response)
                     .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);

@@ -19,6 +19,8 @@ import java.util.Set;
 public class DepartmentService {
 
 
+    private DepartmentService() {
+    }
 
     public static List<DepartmentDto> getAllDepartments() {
         return Database.doInTransaction(em -> {
@@ -74,10 +76,10 @@ public class DepartmentService {
             boolean done =  departmentDAO.save(department, em);
             em.getTransaction().commit();
             em.close();
+            emf.close();
             if(!done){
                 throw new ResourceNotFound("Department already exists");
             }else {
-                System.out.println("Department add: " +department.getDepartmentId()+ " " + department.getDepartmentName());
                 EmployeeService.updateEmployeeDepartment(department.getEmployee().getEmployeeId(), department.getDepartmentId());
                 return true;
             }
@@ -127,7 +129,7 @@ public class DepartmentService {
     public static boolean deleteDepartment(int id) {
        return Database.doInTransaction(em -> {
             DepartmentDAO departmentDAO = new DepartmentDAO();
-            return departmentDAO.DeleteDepartmentById(id, em);
+            return departmentDAO.deleteDepartmentById(id, em);
         });
     }
 
@@ -135,10 +137,7 @@ public class DepartmentService {
         return Database.doInTransaction(em -> {
             DepartmentDAO departmentDAO = new DepartmentDAO();
             List<Employee> employees = departmentDAO.getAllManager(em);
-            System.out.println("Manager size: "+employees.size());
-            for (Employee employee : employees) {
-                System.out.println("Manager: "+employee.getFirstName());
-            }
+
             return EmployeeMapper.INSTANCE.toEmployeeDtoList(employees);
         });
     }

@@ -28,10 +28,9 @@ public class LeaveManagementDAO  implements LeavManagementDAOInt {
     @Override
     public boolean save(LeaveManagement leaveManagement, EntityManager em) {
 
-            int days = areDatesValid(leaveManagement);
-
-            em.persist(leaveManagement);
-            return true;
+        areDatesValid(leaveManagement);
+        em.persist(leaveManagement);
+        return true;
 
     }
 
@@ -42,12 +41,17 @@ public class LeaveManagementDAO  implements LeavManagementDAOInt {
 
     @Override
     public boolean update(LeaveManagement leaveManagement, EntityManager em) {
-        return false;
+        try {
+            em.merge(leaveManagement);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public void delete(LeaveManagement leaveManagement, EntityManager em) {
-
+        em.remove(leaveManagement);
     }
 
     public int areDatesValid(LeaveManagement leaveManagement) {

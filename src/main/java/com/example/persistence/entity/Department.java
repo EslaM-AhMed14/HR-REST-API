@@ -30,8 +30,8 @@ public class Department  implements java.io.Serializable {
      private String departmentName;
      private Boolean isHead;
 
-     private Set<Job> jobs = new HashSet<Job>(0);
-     private Set<Employee> employees = new HashSet<Employee>(0);
+     private Set<Job> jobs = new HashSet<>(0);
+     private Set<Employee> employees = new HashSet<>(0);
 
     public Department() {
     }

@@ -7,7 +7,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Path("/jobOpening")
 public class JobResource {
@@ -42,8 +44,10 @@ public class JobResource {
     public Response createJobOpening(JobDto jobDto) {
         try {
             JobService.createJobOpening(jobDto);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","new Job Opening added successfully");
             return Response.status(Response.Status.OK)
-                    .entity("new Job Opening added successfully")
+                    .entity(response)
                     .build();
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -57,8 +61,10 @@ public class JobResource {
     public Response updateJobOpening(JobDto jobDto) {
         try {
             JobService.updateJobOpening(jobDto);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Job Opening updated successfully");
             return Response.status(Response.Status.OK)
-                    .entity("Job Opening updated successfully")
+                    .entity(response)
                     .build();
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -72,8 +78,10 @@ public class JobResource {
     public Response deleteJobOpening(@QueryParam("id") int id) {
         try {
             JobService.deleteJobOpening(id);
+            Map<String,String > response = new HashMap<>();
+            response.put("message","Job Opening deleted successfully");
             return Response.status(Response.Status.OK)
-                    .entity("Job Opening deleted successfully")
+                    .entity(response)
                     .build();
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

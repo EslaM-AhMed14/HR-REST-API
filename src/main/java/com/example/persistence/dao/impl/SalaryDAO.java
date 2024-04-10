@@ -1,6 +1,7 @@
 package com.example.persistence.dao.impl;
 
 
+import com.example.exception.ResourceNotFound;
 import com.example.persistence.dao.interfaces.SalaryDAOInt;
 import com.example.persistence.entity.Salary;
 import jakarta.persistence.EntityManager;
@@ -18,10 +19,8 @@ public class SalaryDAO  implements SalaryDAOInt {
     public boolean save(Salary salary, EntityManager em) {
         em.persist(salary);
         Salary salary1 = em.find(Salary.class, salary.getSalaryId());
-        if (salary1 == null) {
-            return false;
-        }
-        return true;
+
+        return (salary1 == null);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class SalaryDAO  implements SalaryDAOInt {
 
     @Override
     public void delete(Salary salary, EntityManager em) {
-
+            em.remove(salary);
     }
 
     public Salary getSalaryByEmployeeId(Integer employeeId, EntityManager em) {
@@ -58,13 +57,12 @@ public class SalaryDAO  implements SalaryDAOInt {
 
     public Salary getBasicSalary(Integer employeeId, EntityManager em) {
        try {
-           Salary salary = em.createQuery("SELECT s FROM Salary s WHERE s.employee.employeeId = :employeeId", Salary.class)
+           return em.createQuery("SELECT s FROM Salary s WHERE s.employee.employeeId = :employeeId", Salary.class)
                    .setParameter("employeeId", employeeId)
                    .getSingleResult();
 
-                return salary;
        }catch (NoResultException e){
-           throw new NoResultException("No salary found for employee with id: " + employeeId);
+           throw new ResourceNotFound("No salary found for employee with id: " + employeeId);
        }catch (NonUniqueResultException e){
            throw new NonUniqueResultException("Multiple salaries found for employee with id: " + employeeId);
        }

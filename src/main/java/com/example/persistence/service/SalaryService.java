@@ -9,7 +9,7 @@ import com.example.persistence.mapper.SalaryMapper;
 import java.util.List;
 
 public class SalaryService {
-    public SalaryService() {
+    private SalaryService() {
     }
 
     public static SalaryDto getBasicSalary(int employeeId) {

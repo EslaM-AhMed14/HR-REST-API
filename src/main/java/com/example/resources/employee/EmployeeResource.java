@@ -8,12 +8,14 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("employee")
+@Path("/employee")
 public class EmployeeResource {
 
     /**
@@ -30,26 +32,26 @@ public class EmployeeResource {
 
     @GET
     @Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_JSON})
-    @Path("getAllEmployees")
+    @Path("/getAllEmployees")
     public Response getAllEmployees() {
         List<EmployeeDto> employees = EmployeeService.getAllEmployees();
         if (employees.isEmpty())
             throw new ResourceNotFound("No Employees found");
 
         return Response.status(Response.Status.OK)
-                    .entity(employees)
-                    .build();
+                .entity(employees)
+                .build();
 
     }
 
     @GET
     @Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML})
-    @Path("getEmployeeById/{id}")
+    @Path("/getEmployeeById/{id}")
     public Response getEmployeeById(@PathParam("id") int id) {
         EmployeeDto employeeDto = EmployeeService.getEmployeeById(id);
         if (employeeDto == null){
             ErrorMessage errorMessage = new ErrorMessage("Employee not found", 404, "probably the id is not found in the database");
-          Response response = Response.status(Response.Status.NOT_FOUND)
+            Response response = Response.status(Response.Status.NOT_FOUND)
                     .entity(errorMessage)
                     .build();
             throw new WebApplicationException(response);
@@ -57,15 +59,15 @@ public class EmployeeResource {
 
 
         return Response.status(Response.Status.OK)
-                    .entity(employeeDto)
-                    .build();
+                .entity(employeeDto)
+                .build();
 
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("addEmployee")
+    @Path("/addEmployee")
     public Response addEmployee(EmployeeDto employeeDto) {
         boolean addedEmployee = EmployeeService.addEmployee(employeeDto);
         if (!addedEmployee){
@@ -76,21 +78,25 @@ public class EmployeeResource {
             throw new WebApplicationException(response);
         }
 
+       Map<String,String > response = new HashMap<>();
+        response.put("message", "Employee added successfully");
         return Response.status(Response.Status.CREATED)
-                    .entity("Employee added successfully")
-                    .build();
+                .entity(response)
+                .build();
 
     }
 
     @DELETE
-    @Path("deleteEmployee/{id}")
+    @Path("/deleteEmployee/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteEmployee(@PathParam("id") int id) {
         boolean done =  EmployeeService.deleteEmployee(id);
         if (!done)
             throw new ResourceNotFound("Employee not found");
-
+        Map<String,String > response = new HashMap<>();
+        response.put("message", "Employee deleted successfully");
         return Response.status(Response.Status.OK)
-                .entity("Employee deleted successfully")
+                .entity(response)
                 .build();
     }
 
@@ -100,13 +106,15 @@ public class EmployeeResource {
     @Path("/updateEmployee")
     public Response updateEmployee(EmployeeDto employeeDto) {
         try{
-        boolean updatedEmployee = EmployeeService.updateEmployee(employeeDto);
-        if (!updatedEmployee)
-            throw new ResourceNotFound("Employee not updated");
+            boolean updatedEmployee = EmployeeService.updateEmployee(employeeDto);
+            if (!updatedEmployee)
+                throw new ResourceNotFound("Employee not updated");
 
-        return Response.status(Response.Status.OK)
-                .entity("Employee updated successfully")
-                .build();
+            Map<String,String > response = new HashMap<>();
+            response.put("message", "Employee updated successfully");
+            return Response.status(Response.Status.OK)
+                    .entity(response)
+                    .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
             Response response = Response.status(Response.Status.NOT_FOUND)
@@ -119,7 +127,8 @@ public class EmployeeResource {
 
 
     @GET
-    @Path("employeesPage/{pageId}")
+    @Path("/employeesPage/{pageId}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeesByPage(@PathParam("pageId") int pageId , @Context UriInfo uriInfo) {
         try{
             List<EmployeeDto> employees = EmployeeService.getEmployeesByPage(pageId);
@@ -151,4 +160,3 @@ public class EmployeeResource {
     }
 
 }
-

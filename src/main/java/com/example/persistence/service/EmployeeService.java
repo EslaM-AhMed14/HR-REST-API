@@ -19,6 +19,8 @@ import java.util.Optional;
 
 public class EmployeeService {
 
+    private EmployeeService() {
+    }
 
     public static List<EmployeeDto> getAllEmployees() {
       return Database.doInTransaction(em -> {
@@ -46,15 +48,11 @@ public class EmployeeService {
                 Persistence.createEntityManagerFactory("DB");
         jakarta.persistence.EntityManager em = emf.createEntityManager();
             EmployeeDAO employeeDAO = new EmployeeDAO();
-//            DepartmentDto departmentDto = DepartmentService.getDepartmentByName(employeeDto.getDepartmentName());
-//
-//            if(departmentDto == null) {
-//                throw new ResourceNotFound("Department not found");
-//            }
+
             Employee employee = EmployeeMapper.INSTANCE.employeeDtoToEmployee(employeeDto);
-        System.out.println("employee start" );
             boolean done =  employeeDAO.save(employee, em);
             em.close();
+            emf.close();
             return done;
     }
 
@@ -69,6 +67,7 @@ public class EmployeeService {
                 return false;
             }
             em.close();
+            emf.close();
             return true;
 
 
@@ -82,15 +81,12 @@ public class EmployeeService {
 
             EmployeeDAO employeeDAO = new EmployeeDAO();
             Employee employee = EmployeeMapper.INSTANCE.employeeDtoToEmployee(employeeDto);
-           System.out.println("employeeid" + employee.getEmployeeId());
             Employee fromDatabase = employeeDAO.get(employee.getEmployeeId(), emm).orElse(null);
             emm.close();
-           System.out.println("fromDatabase");
             if (fromDatabase == null) {
                 throw  new ResourceNotFound("Employee not found");
             }
             employee = updateChangedFields(employee, fromDatabase);
-           System.out.println("employee");
             return  employeeDAO.update(employee, em);
 
     }
@@ -117,7 +113,6 @@ public class EmployeeService {
         if (employee.getDepartment().getDepartmentId() != null && !employee.getDepartment().getDepartmentId().equals(fromDatabase.getDepartment().getDepartmentId())) {
             DepartmentDto department =  DepartmentService.getDepartmentById(employee.getDepartment().getDepartmentId());
             Department department1 = DepartmentMapper.INSTANCE.departmentDtoToDepartment(department);
-            System.out.println("department1" + department1.toString());
             fromDatabase.setDepartment(department1);
         }
         if (employee.getSalary().getBasicSalary() != null && !employee.getSalary().getBasicSalary().equals(fromDatabase.getSalary().getBasicSalary())) {
@@ -136,7 +131,6 @@ public class EmployeeService {
             DepartmentDAO departmentDAO = new DepartmentDAO();
             Employee employee = employeeDAO.get(employeeId, em).orElse(null);
             Department department = departmentDAO.get(departmentId, em).orElse(null);
-            System.out.println("********* dep" + department.getDepartmentId());
             if (employee == null || department == null) {
                 return false;
             }

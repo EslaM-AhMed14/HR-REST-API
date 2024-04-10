@@ -18,7 +18,7 @@ public class LeaveManagementDAO  implements LeavManagementDAOInt {
 
     public List<LeaveManagement> getAllPerformanceReview(EntityManager em) {
         try {
-            return em.createQuery("FROM lLeaveManagement", LeaveManagement.class)
+            return em.createQuery("FROM LeaveManagement l", LeaveManagement.class)
                     .getResultList();
         } catch (Exception e) {
             throw new RuntimeException("No Vications Review Found");

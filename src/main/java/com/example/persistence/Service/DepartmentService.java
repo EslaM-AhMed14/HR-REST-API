@@ -131,4 +131,16 @@ public class DepartmentService {
             return departmentDAO.DeleteDepartmentById(id, em);
         });
     }
+
+    public static List<EmployeeDto> getAllManager() {
+        return Database.doInTransaction(em -> {
+            DepartmentDAO departmentDAO = new DepartmentDAO();
+            List<Employee> employees = departmentDAO.getAllManager(em);
+            System.out.println("Manager size: "+employees.size());
+            for (Employee employee : employees) {
+                System.out.println("Manager: "+employee.getFirstName());
+            }
+            return EmployeeMapper.INSTANCE.toEmployeeDtoList(employees);
+        });
+    }
 }

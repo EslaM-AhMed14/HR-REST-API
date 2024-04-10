@@ -149,6 +149,7 @@
             <version>7.0.1.Final</version>
         </dependency>
 
+        <!-- HikarIcp -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -178,6 +179,12 @@
             <artifactId>jersey-media-json-binding</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
         <!--MapStruct -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -190,7 +197,7 @@
             <version>1.4.2.Final</version>
         </dependency>
 
-        <!-- -->
+        <!-- Date Format -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

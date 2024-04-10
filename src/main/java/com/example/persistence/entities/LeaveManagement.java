@@ -4,17 +4,11 @@ package com.example.persistence.entities;
 
 import com.example.persistence.enums.LeaveStatus;
 import com.example.persistence.enums.LeaveType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.*;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
 import java.sql.Date;
 
 /**
@@ -28,12 +22,13 @@ public class LeaveManagement implements java.io.Serializable {
 
 
      private Integer leaveId;
+     @JsonbTransient
      private Employee employee;
      private LeaveType leaveType;
      private Date startDate;
      private Date endDate;
      private LeaveStatus status;
-     private Date approvalDate;
+     private Date AccreditationDate;
 
     public LeaveManagement() {
     }
@@ -44,7 +39,7 @@ public class LeaveManagement implements java.io.Serializable {
        this.startDate = startDate;
        this.endDate = endDate;
        this.status = status;
-       this.approvalDate = approvalDate;
+       this.AccreditationDate = approvalDate;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -71,6 +66,7 @@ public class LeaveManagement implements java.io.Serializable {
 
     
     @Column(name="LeaveType", length=8)
+    @Enumerated(EnumType.STRING)
     public LeaveType getLeaveType() {
         return this.leaveType;
     }
@@ -101,6 +97,7 @@ public class LeaveManagement implements java.io.Serializable {
 
     
     @Column(name="Status", length=9)
+    @Enumerated(EnumType.STRING)
     public LeaveStatus getStatus() {
         return this.status;
     }
@@ -110,18 +107,38 @@ public class LeaveManagement implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="ApprovalDate", length=10)
-    public Date getApprovalDate() {
-        return this.approvalDate;
+    @Column(name="AccreditationDate", length=20)
+    public Date getAccreditationDate() {
+        return this.AccreditationDate;
     }
     
-    public void setApprovalDate(Date approvalDate) {
-        this.approvalDate = approvalDate;
+    public void setAccreditationDate(Date accreditationDate) {
+        this.AccreditationDate = accreditationDate;
     }
 
 
+    @Transient
+    public Integer getReviwerId() {
+        return employee.getEmployeeId();
+    }
 
+    @Transient
+    public String getReviwerName() {
+        return employee.getFirstName() + " " + employee.getLastName();
+    }
 
+    @Override
+    public String toString() {
+        return "LeaveManagement{" +
+                "leaveId=" + leaveId +
+                ", employee=" + employee.getEmployeeId() +
+                ", leaveType=" + leaveType +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
+                ", approvalDate=" + AccreditationDate +
+                '}';
+    }
 }
 
 

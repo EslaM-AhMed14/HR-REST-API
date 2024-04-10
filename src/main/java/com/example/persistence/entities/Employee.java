@@ -3,6 +3,8 @@ package com.example.persistence.entities;
 
 
 import com.example.persistence.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -31,15 +33,15 @@ public class Employee  implements java.io.Serializable {
      private String email;
      private String jobTitle;
      private String phoneNumber;
-     private Set<LeaveManagement> leaveManagements = new HashSet<LeaveManagement>(0);
-     private Set<PerformanceReview> performanceReviews = new HashSet<PerformanceReview>(0);
-//     private Set<Department> departments = new HashSet<Department>(0);
+     private Set<LeaveManagement> leaveManagements ;
+     private Set<PerformanceReview> performanceReviews ;
+
      private Salary salary;
 
     public Employee() {
     }
 
-    public Employee(Department department, String firstName, String lastName, Date dateOfBirth, Gender gender, String email, String phoneNumber, Set<LeaveManagement> leavemanagements, Set<PerformanceReview> performanceReviews,  Salary salary , String jobTitle){
+    public Employee(Department department, String firstName, String lastName, Date dateOfBirth, Gender gender, String email, String phoneNumber,Set<LeaveManagement> leavemanagements,Set <PerformanceReview> performanceReviews,  Salary salary , String jobTitle){
        this.department = department;
        this.firstName = firstName;
        this.lastName = lastName;
@@ -65,7 +67,7 @@ public class Employee  implements java.io.Serializable {
         this.employeeId = employeeId;
     }
 
-@ManyToOne(fetch=FetchType.EAGER , cascade = {CascadeType.MERGE , CascadeType.REFRESH})
+    @ManyToOne(fetch=FetchType.EAGER , cascade = {CascadeType.MERGE , CascadeType.REFRESH})
     @JoinColumn(name="DepartmentID")
     public Department getDepartment() {
         return this.department;
@@ -132,14 +134,6 @@ public class Employee  implements java.io.Serializable {
         this.gender = gender;
     }
     
-//    @Column(name="Gender", length=10)
-//    public Gender getGender() {
-//        return this.gender;
-//    }
-//
-//    public void setGender(Gender gender) {
-//        this.gender = gender;
-//    }
 
     
     @Column(name="Email", length=100)
@@ -161,32 +155,26 @@ public class Employee  implements java.io.Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="employee")
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="employee" , cascade = {CascadeType.REMOVE , CascadeType.MERGE })
     public Set<LeaveManagement> getLeaveManagements() {
         return this.leaveManagements;
     }
-    
+
     public void setLeaveManagements(Set<LeaveManagement> leavemanagements) {
         this.leaveManagements = leavemanagements;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="employee")
+//    @OneToOne(fetch=FetchType.EAGER, mappedBy="employee" , cascade = {CascadeType.REMOVE , CascadeType.MERGE })
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy="employee" , cascade = {CascadeType.REMOVE , CascadeType.MERGE })
     public Set<PerformanceReview> getPerformanceReviews() {
         return this.performanceReviews;
     }
-    
+
     public void setPerformanceReviews(Set<PerformanceReview> performanceReviews) {
         this.performanceReviews = performanceReviews;
     }
 
-//@OneToMany(fetch=FetchType.LAZY, mappedBy="employee")
-//    public Set<Department> getDepartments() {
-//        return this.departments;
-//    }
-//
-//    public void setDepartments(Set<Department> departments) {
-//        this.departments = departments;
-//    }
 
     @OneToOne( mappedBy="employee" , cascade = {CascadeType.REMOVE ,CascadeType.MERGE})
     public Salary getSalary() {
@@ -213,6 +201,9 @@ public class Employee  implements java.io.Serializable {
             salary.setSalaryId(this.getEmployeeId());
         }
     }
+
+
+
 
     @Override
     public String toString() {

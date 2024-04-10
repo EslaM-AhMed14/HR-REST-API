@@ -36,7 +36,6 @@ public class DepartmentDAO implements DepartmentDAOInt {
     @Override
     public boolean update(Department department, EntityManager em) {
         try {
-
             em.merge(department);
             em.flush();
             return true;
@@ -106,5 +105,18 @@ public class DepartmentDAO implements DepartmentDAOInt {
             System.out.println( "**+"+ i++ +" -"+employee.getFirstName());
         }
         return employees;
+    }
+
+   public List<Employee> getAllManager(EntityManager em) {
+       try {
+           return em.createQuery("SELECT e FROM Employee e WHERE e.employeeId = e.department.employee.employeeId", Employee.class).getResultList();
+       } catch (Exception e) {
+           throw new RuntimeException("No Manager Found");
+       }
+   }
+
+    public boolean isHeadOfDepartment(Integer id, EntityManager em) {
+        List<Department> departments = getAllDepartments(em);
+        return departments.stream().anyMatch(department -> department.getEmployee() != null && department.getEmployee().getEmployeeId().equals(id) && department.getIsHead());
     }
 }

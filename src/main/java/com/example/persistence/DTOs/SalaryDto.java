@@ -1,12 +1,16 @@
 package com.example.persistence.DTOs;
 
 import com.example.persistence.entities.Employee;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Value
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SalaryDto implements Serializable {
 
     private Integer salaryId;

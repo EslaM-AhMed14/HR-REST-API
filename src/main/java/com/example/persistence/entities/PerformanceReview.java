@@ -3,17 +3,16 @@ package com.example.persistence.entities;
 
 
 import com.example.persistence.enums.PerformanceReating;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
 import java.sql.Date;
 
 /**
@@ -23,13 +22,20 @@ import java.sql.Date;
 @Table(name="performancereview"
     ,catalog="hrapi"
 )
+
 public class PerformanceReview implements java.io.Serializable {
 
 
      private Integer reviewId;
+     @JsonbTransient
      private Employee employee;
      private Date reviewDate;
      private PerformanceReating performanceRating;
+
+     private  Integer  reviwerId;
+     private String reviwerName;
+
+
 
     public PerformanceReview() {
     }
@@ -40,9 +46,7 @@ public class PerformanceReview implements java.io.Serializable {
        this.performanceRating = performanceRating;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-
-    
+    @Id @GeneratedValue(strategy=IDENTITY)
     @Column(name="ReviewID", unique=true, nullable=false)
     public Integer getReviewId() {
         return this.reviewId;
@@ -52,7 +56,7 @@ public class PerformanceReview implements java.io.Serializable {
         this.reviewId = reviewId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="EmployeeID")
     public Employee getEmployee() {
         return this.employee;
@@ -74,6 +78,7 @@ public class PerformanceReview implements java.io.Serializable {
 
     
     @Column(name="PerformanceRating", length=9)
+    @Enumerated(EnumType.STRING)
     public PerformanceReating getPerformanceRating() {
         return this.performanceRating;
     }
@@ -83,8 +88,26 @@ public class PerformanceReview implements java.io.Serializable {
     }
 
 
+    @Transient
+    public Integer getReviwerId() {
+        return employee.getEmployeeId();
+    }
+
+    @Transient
+    public String getReviwerName() {
+        return employee.getFirstName() + " " + employee.getLastName();
+    }
 
 
+
+    @Override
+    public String toString() {
+        return "PerformanceReview{" +
+                "reviewId=" + reviewId +
+                ", reviewDate=" + reviewDate +
+                ", performanceRating=" + performanceRating +
+                '}';
+    }
 }
 
 

@@ -4,10 +4,11 @@ import com.example.CustomException.ErrorMessage;
 import com.example.CustomException.ResourceNotFound;
 import com.example.persistence.DTOs.EmployeeDto;
 import com.example.persistence.Service.EmployeeService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,7 +53,6 @@ public class EmployeeResource {
           Response response = Response.status(Response.Status.NOT_FOUND)
                     .entity(errorMessage)
                     .build();
-
             throw new WebApplicationException(response);
         }
 
@@ -78,7 +78,7 @@ public class EmployeeResource {
         }
 
         return Response.status(Response.Status.CREATED)
-                    .entity(addedEmployee)
+                    .entity("Employee added successfully")
                     .build();
 
     }
@@ -106,7 +106,7 @@ public class EmployeeResource {
             throw new ResourceNotFound("Employee not updated");
 
         return Response.status(Response.Status.OK)
-                .entity(updatedEmployee)
+                .entity("Employee updated successfully")
                 .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
@@ -116,6 +116,39 @@ public class EmployeeResource {
             throw new WebApplicationException(response);
         }
 
+    }
+
+
+    @GET
+    @Path("employeesPage/{pageId}")
+    public Response getEmployeesByPage(@PathParam("pageId") int pageId , @Context UriInfo uriInfo) {
+        try{
+            List<EmployeeDto> employees = EmployeeService.getEmployeesByPage(pageId);
+
+            if (employees.isEmpty()) {
+                throw new ResourceNotFound("No Employees found");
+            }
+
+            for (EmployeeDto employee : employees) {
+
+                Link previousPage = Link.fromUri(uriInfo.getBaseUri() + "employee/employeesPage/" + (pageId - 1))
+                        .rel("previousPage")
+                        .build();
+                Link nextPage = Link.fromUri(uriInfo.getBaseUri() + "employee/employeesPage/" + (pageId + 1))
+                        .rel("nextPage")
+                        .build();
+
+                employee.setLinks( Arrays.asList(previousPage, nextPage) );
+            }
+
+            return Response.ok(employees).build();
+        }catch (Exception e){
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
+            Response response = Response.status(Response.Status.NOT_FOUND)
+                    .entity(errorMessage)
+                    .build();
+            throw new WebApplicationException(response);
+        }
     }
 
 }

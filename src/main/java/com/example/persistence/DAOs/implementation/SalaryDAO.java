@@ -58,11 +58,10 @@ public class SalaryDAO  implements SalaryDAOInt {
 
     public Salary getBasicSalary(Integer employeeId, EntityManager em) {
        try {
-           BigDecimal bd = em.createQuery("SELECT s.basicSalary FROM Salary s WHERE s.employee.employeeId = :employeeId", BigDecimal.class)
+           Salary salary = em.createQuery("SELECT s FROM Salary s WHERE s.employee.employeeId = :employeeId", Salary.class)
                    .setParameter("employeeId", employeeId)
                    .getSingleResult();
-           Salary salary = new Salary();
-              salary.setBasicSalary(bd);
+
                 return salary;
        }catch (NoResultException e){
            throw new NoResultException("No salary found for employee with id: " + employeeId);

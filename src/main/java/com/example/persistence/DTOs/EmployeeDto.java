@@ -1,19 +1,25 @@
 package com.example.persistence.DTOs;
 
 
+
 import com.example.persistence.enums.Gender;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.json.bind.annotation.JsonbDateFormat;
+import jakarta.ws.rs.core.Link;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.util.List;
 
 
 @Getter
@@ -21,6 +27,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Data
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class EmployeeDto  implements Serializable {
     private Integer employeeId;
     private  String departmentName;
@@ -44,6 +53,11 @@ public class EmployeeDto  implements Serializable {
     private String email;
     private String phoneNumber;
     private BigDecimal basicSalary ;
+
+    @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
+    private List<Link> links;
+
+
 
 
 }

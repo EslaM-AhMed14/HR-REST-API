@@ -1,6 +1,7 @@
 package com.example.persistence.DAOs.implementation;
 
 
+import com.example.CustomException.ResourceNotFound;
 import com.example.persistence.DAOs.interfaces.EmployeeDAOInt;
 import com.example.persistence.entities.Department;
 import com.example.persistence.entities.Employee;
@@ -19,32 +20,42 @@ public class EmployeeDAO implements EmployeeDAOInt {
     @Override
     public boolean save(Employee employee, EntityManager em)  {
 
-        System.out.println("----------------------------------------------------------------");
-        System.out.println(employee.getSalary().toString());
-        System.out.println("----------------------------------------------------------------");
-        System.out.println(employee.toString() );
-        System.out.println("----------------------------------------------------------------");
-        DepartmentDAO departmentDAO = new DepartmentDAO();
-        Department department = departmentDAO.getDepartmentByName(employee.getDepartment().getDepartmentName(), em);
+        try {
+            DepartmentDAO departmentDAO = new DepartmentDAO();
+            Department department = departmentDAO.getDepartmentByName(employee.getDepartment().getDepartmentName(), em);
 
-        if(department == null){
-            return false;
+            if(department == null){
+                throw new NoResultException("Department not found");
+            }
 
+            System.out.println("Department "+ employee.getDepartment().getDepartmentName());
+            System.out.println("phone"+ employee.getPhoneNumber());
+            System.out.println("emsil"+employee.getEmail());
+
+            System.out.println("Department found");
+            em.getTransaction().begin();
+            employee.setDepartment(department);
+            Salary salary = new Salary();
+            salary.setBasicSalary(employee.getSalary().getBasicSalary());
+            employee.setSalary(salary);
+            salary.setEmployee(employee);
+            em.persist(employee);
+            em.persist(salary);
+            em.getTransaction().commit();
+
+            em.getTransaction().begin();
+            Employee employee1 = em.find(Employee.class, employee.getEmployeeId());
+            em.getTransaction().commit();
+            System.out.println("end");
+
+            return !Objects.isNull(employee1);
+        }catch (NoResultException e) {
+            throw new ResourceNotFound("Failed to add employee: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFound("the email or phoneNumber is already in use");
         }
 
-        em.getTransaction().begin();
-        employee.setDepartment(department);
-        Salary salary = new Salary();
-        salary.setBasicSalary(employee.getSalary().getBasicSalary());
-        employee.setSalary(salary);
-        salary.setEmployee(employee);
-        em.persist(employee);
-        em.persist(salary);
-        Employee employee1 = em.find(Employee.class, employee.getEmployeeId());
-        em.getTransaction().commit();
-        em.close();
-
-        return !Objects.isNull(employee1);
     }
 
     @Override
@@ -56,13 +67,8 @@ public class EmployeeDAO implements EmployeeDAOInt {
     public boolean update(Employee employee, EntityManager em) {
         try {
             em.getTransaction().begin();
-//                Employee managedEmployee = em.find(Employee.class, employee.getEmployeeId());
-//                if (managedEmployee == null) {
-//                    throw new NoResultException("Employee not found and Cant Update");
-//                }
-//
 
-            Employee updatedEmployee = em.merge(employee);
+            em.merge(employee);
             em.flush();
             em.getTransaction().commit();
             em.close();
@@ -97,10 +103,26 @@ public class EmployeeDAO implements EmployeeDAOInt {
     }
 
     @Override
+    public List<Employee> getEmployeesByPage(int pageId, EntityManager em) {
+        try {
+            return em.createQuery("SELECT e FROM Employee e", Employee.class)
+                    .setFirstResult((pageId-1) * 2)
+                    .setMaxResults(2)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new NoResultException("No Employees found");
+
+        }
+    }
+
+    @Override
     public List<Employee> getAllEmployees(EntityManager em) {
 
         return em.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
     }
+
+
 
 
 }

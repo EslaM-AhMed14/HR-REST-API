@@ -14,10 +14,11 @@ public  interface  JobMapper {
 
     JobMapper INSTANCE = Mappers.getMapper(JobMapper.class);
 
-    @Mapping(source = "department.departmentName", target = "departmentName")
+//    @Mapping(source = "department.departmentName", target = "departmentName")
+//    @Mapping(source = "department.departmentId", target = "departmentId")
     JobDto jobToJobDto(Job job);
 
-    @Mapping(source = "departmentName", target = "department.departmentName")
+
     Job jobDtoToJob(JobDto jobDto);
 
     List<JobDto> toJobDtoList(List<Job> jobs);

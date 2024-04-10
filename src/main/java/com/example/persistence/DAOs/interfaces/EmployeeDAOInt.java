@@ -12,4 +12,5 @@ public interface EmployeeDAOInt  extends  DAO<Employee>{
 
     public Optional<Employee> delete(int id, EntityManager em) ;
 
+    List<Employee> getEmployeesByPage(int pageId, EntityManager em);
 }

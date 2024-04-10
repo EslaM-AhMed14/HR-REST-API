@@ -97,6 +97,10 @@ public class Salary  implements java.io.Serializable {
         return basic.add(bon).subtract(ded);
     }
 
+    public void setNetSalary(BigDecimal netSalary) {
+        this.netSalary = netSalary;
+    }
+
     @Override
     public String toString() {
         return "Salary{" +

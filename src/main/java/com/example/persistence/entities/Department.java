@@ -29,6 +29,7 @@ public class Department  implements java.io.Serializable {
      private Employee employee;
      private String departmentName;
      private Boolean isHead;
+
      private Set<Job> jobs = new HashSet<Job>(0);
      private Set<Employee> employees = new HashSet<Employee>(0);
 
@@ -53,7 +54,7 @@ public class Department  implements java.io.Serializable {
         this.departmentId = departmentId;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="ManagerID")
     public Employee getEmployee() {
         return this.employee;

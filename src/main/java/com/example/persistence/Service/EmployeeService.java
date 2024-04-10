@@ -1,5 +1,6 @@
 package com.example.persistence.Service;
 
+import com.example.CustomException.ResourceNotFound;
 import com.example.persistence.DAOs.implementation.DepartmentDAO;
 import com.example.persistence.DAOs.implementation.EmployeeDAO;
 import com.example.persistence.DTOs.DepartmentDto;
@@ -45,9 +46,16 @@ public class EmployeeService {
                 Persistence.createEntityManagerFactory("DB");
         jakarta.persistence.EntityManager em = emf.createEntityManager();
             EmployeeDAO employeeDAO = new EmployeeDAO();
+//            DepartmentDto departmentDto = DepartmentService.getDepartmentByName(employeeDto.getDepartmentName());
+//
+//            if(departmentDto == null) {
+//                throw new ResourceNotFound("Department not found");
+//            }
             Employee employee = EmployeeMapper.INSTANCE.employeeDtoToEmployee(employeeDto);
-            return  employeeDAO.save(employee, em);
-
+        System.out.println("employee start" );
+            boolean done =  employeeDAO.save(employee, em);
+            em.close();
+            return done;
     }
 
     public static boolean deleteEmployee(int id) {
@@ -64,16 +72,6 @@ public class EmployeeService {
             return true;
 
 
-
-
-//        return Database.doInTransaction(em -> {
-//            EmployeeDAO employeeDAO = new EmployeeDAO();
-//            Optional<Employee> employee = employeeDAO.delete(id, em);
-//            if (employee.isEmpty()) {
-//                return false;
-//            }
-//            return true;
-//        });
     }
 
     public static boolean updateEmployee(EmployeeDto employeeDto) {
@@ -89,7 +87,7 @@ public class EmployeeService {
             emm.close();
            System.out.println("fromDatabase");
             if (fromDatabase == null) {
-                throw  new RuntimeException("Employee not found");
+                throw  new ResourceNotFound("Employee not found");
             }
             employee = updateChangedFields(employee, fromDatabase);
            System.out.println("employee");
@@ -145,5 +143,13 @@ public class EmployeeService {
             employee.setDepartment(department);
             return employeeDAO.update(employee, em);
 
+    }
+
+    public static List<EmployeeDto> getEmployeesByPage(int pageId) {
+        return Database.doInTransaction(em -> {
+            EmployeeDAO employeeDAO = new EmployeeDAO();
+            List<Employee> employees = employeeDAO.getEmployeesByPage(pageId, em);
+            return EmployeeMapper.INSTANCE.toEmployeeDtoList(employees);
+        });
     }
 }

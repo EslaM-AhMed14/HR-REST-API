@@ -1,15 +1,20 @@
 package com.example.persistence.DTOs;
 
 import com.example.persistence.entities.Department;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 
-@Value
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class JobDto  implements Serializable {
     private Integer jobId;
 
-    private String departmentName;
+    private String departmentProviderName;
+    private Integer departmentProviderId;
     private String jobName;
     private String requirements;
 }

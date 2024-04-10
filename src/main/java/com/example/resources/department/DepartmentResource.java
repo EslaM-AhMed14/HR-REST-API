@@ -74,7 +74,7 @@ public class DepartmentResource {
                throw new ResourceNotFound("Department not added");
 
            return Response.status(Response.Status.CREATED)
-                   .entity(addedDepartment)
+                   .entity("Department added")
                    .build();
        }catch (Exception e){
            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
@@ -96,7 +96,7 @@ public class DepartmentResource {
                 throw new ResourceNotFound("Department not updated");
 
             return Response.status(Response.Status.OK)
-                    .entity(updatedDepartment)
+                    .entity("Department updated")
                     .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
@@ -136,6 +136,27 @@ public class DepartmentResource {
            boolean done  = DepartmentService.deleteDepartment(id);
             return Response.status(Response.Status.OK)
                     .entity("Department deleted")
+                    .build();
+        }catch (Exception e){
+            ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);
+            Response response = Response.status(Response.Status.NOT_FOUND)
+                    .entity(errorMessage)
+                    .build();
+            throw new WebApplicationException(response);
+        }
+    }
+
+    @GET
+    @Produces({MediaType.TEXT_PLAIN ,MediaType.APPLICATION_JSON})
+    @Path("/getAllManager")
+    public Response getAllManager() {
+        try {
+            List<EmployeeDto> employees = DepartmentService.getAllManager();
+            if (employees.isEmpty())
+                throw new ResourceNotFound("No Manager Found");
+
+            return Response.status(Response.Status.OK)
+                    .entity(employees)
                     .build();
         }catch (Exception e){
             ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), 404);

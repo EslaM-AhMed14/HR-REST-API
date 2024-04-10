@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Mapper
@@ -23,4 +25,16 @@ public interface LeaveManagementMapper {
     List<LeaveManagement> toLeaveManagementList(List<LeaveManagementDto> leaveManagementDtos);
 
     List<LeaveManagementDto> toLeaveManagementDtoList(List<LeaveManagement> leaveManagements);
+
+
+    default LocalDate map(java.util.Date date) {
+        if (date instanceof java.sql.Date) {
+            date = new java.util.Date(date.getTime());
+        }
+        return date != null ? date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+    }
+
+    default java.util.Date map(LocalDate localDate) {
+        return localDate != null ? java.util.Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) : null;
+    }
 }

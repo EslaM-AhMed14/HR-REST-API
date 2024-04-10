@@ -1,5 +1,3 @@
-# HR-REST-API
-
 # HR Management System REST API
 
 Welcome to the HR Management System REST API repository! This repository contains the source code and documentation for the REST API that facilitates managing various aspects of human resources including employees, job openings, leave management, salary, departments, and performance reviews.
@@ -32,7 +30,7 @@ To get started with the HR Management System REST API, follow these steps:
 
 ## API Documentation
 
-Detailed documentation for the API endpoints can be found [here]((https://documenter.getpostman.com/view/33815865/2sA3BgBvx9).
+Detailed documentation for the API endpoints can be found [here](https://documenter.getpostman.com/view/33815865/2sA3BgBvx9).
 
 ## Contributing
 
@@ -44,5 +42,3 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 - Commit your changes (`git commit -am 'Add some feature'`).
 - Push to the branch (`git push origin feature/your-feature`).
 - Create a new Pull Request.
-
-

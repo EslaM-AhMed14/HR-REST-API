@@ -1,9 +1,9 @@
 package com.example.resources.salary;
 
 
-import com.example.CustomException.ErrorMessage;
-import com.example.persistence.DTOs.SalaryDto;
-import com.example.persistence.Service.SalaryService;
+import com.example.exception.ErrorMessage;
+import com.example.persistence.dto.SalaryDto;
+import com.example.persistence.service.SalaryService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 

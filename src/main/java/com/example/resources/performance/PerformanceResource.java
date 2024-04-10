@@ -1,14 +1,9 @@
 package com.example.resources.performance;
 
-import com.example.CustomException.ErrorMessage;
-import com.example.CustomException.ResourceNotFound;
-import com.example.persistence.DAOs.implementation.PerformanceReviewDAO;
-import com.example.persistence.DTOs.EmployeeDto;
-import com.example.persistence.DTOs.PerformancReviewDto;
-import com.example.persistence.DTOs.SalaryDto;
-import com.example.persistence.Service.EmployeeService;
-import com.example.persistence.Service.PerformanceServace;
-import com.example.persistence.Service.SalaryService;
+import com.example.exception.ErrorMessage;
+import com.example.exception.ResourceNotFound;
+import com.example.persistence.dto.PerformancReviewDto;
+import com.example.persistence.service.PerformanceServace;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 

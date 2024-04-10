@@ -57,7 +57,7 @@
 <!--                        <configuration>-->
 <!--                            <ejb3>true</ejb3>-->
 <!--                            <jdk5>true</jdk5>-->
-<!--                            <packageName>com.example.persistence.entities</packageName>-->
+<!--                            <packageName>com.example.persistence.entity</packageName>-->
 <!--                            <outputDirectory>src/main/java</outputDirectory>-->
 <!--                            <propertyFile>src/main/resources/hibernate.properties</propertyFile>-->
 <!--                        </configuration>-->
@@ -217,6 +217,21 @@
             <artifactId>jersey-media-json-binding</artifactId>
         </dependency>
 
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
     <properties>

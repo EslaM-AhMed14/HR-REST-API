@@ -1,10 +1,10 @@
 package com.example.resources.department;
 
-import com.example.CustomException.ErrorMessage;
-import com.example.CustomException.ResourceNotFound;
-import com.example.persistence.DTOs.DepartmentDto;
-import com.example.persistence.DTOs.EmployeeDto;
-import com.example.persistence.Service.DepartmentService;
+import com.example.exception.ErrorMessage;
+import com.example.exception.ResourceNotFound;
+import com.example.persistence.dto.DepartmentDto;
+import com.example.persistence.dto.EmployeeDto;
+import com.example.persistence.service.DepartmentService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;

@@ -1,10 +1,9 @@
 package com.example.resources.employee;
 
-import com.example.CustomException.ErrorMessage;
-import com.example.CustomException.ResourceNotFound;
-import com.example.persistence.DTOs.EmployeeDto;
-import com.example.persistence.Service.EmployeeService;
-import jakarta.annotation.security.RolesAllowed;
+import com.example.exception.ErrorMessage;
+import com.example.exception.ResourceNotFound;
+import com.example.persistence.dto.EmployeeDto;
+import com.example.persistence.service.EmployeeService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 

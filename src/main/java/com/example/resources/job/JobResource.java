@@ -1,10 +1,8 @@
 package com.example.resources.job;
 
-import com.example.CustomException.ErrorMessage;
-import com.example.persistence.DTOs.JobDto;
-import com.example.persistence.DTOs.SalaryDto;
-import com.example.persistence.Service.JobService;
-import com.example.persistence.Service.SalaryService;
+import com.example.exception.ErrorMessage;
+import com.example.persistence.dto.JobDto;
+import com.example.persistence.service.JobService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
